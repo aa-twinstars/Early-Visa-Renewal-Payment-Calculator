@@ -3,7 +3,6 @@
 <head>
 <title>Early Visa Renewal Payment Calculator</title>
 
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -18,7 +17,7 @@ body {
 }
 
 .container {
-    width: 400px;
+    width: 420px;
     background: #ffffff;
     padding: 30px;
     border-radius: 12px;
@@ -52,11 +51,10 @@ button {
     font-weight: 600;
     border: none;
     cursor: pointer;
-    transition: 0.3s;
 }
 
-button:hover {
-    opacity: 0.85;
+button:hover{
+    opacity:0.9;
 }
 
 .tooltip {
@@ -70,6 +68,16 @@ button:hover {
     font-weight: 500;
     font-size: 16px;
     margin-top: 15px;
+}
+
+.amount-box{
+    background:#e53935;
+    color:white;
+    padding:14px;
+    border-radius:8px;
+    margin-top:15px;
+    font-weight:600;
+    font-size:18px;
 }
 </style>
 
@@ -87,6 +95,9 @@ button:hover {
 <label>Current Visa Expiry Date</label>
 <input type="date" id="expiry">
 
+<label>New Visa Start Date</label>
+<input type="date" id="newVisaDate">
+
 <label>Last Visa Process</label>
 <select id="process">
 <option value="">Select</option>
@@ -102,27 +113,39 @@ This is to identify what is the exact cost based on the last visa processed for 
 <button onclick="calculate()">Calculate</button>
 
 <div class="result">
-Remaining Days in Current Visa: <span id="days">0</span><br><br>
+Remaining Days in Current Visa: <span id="days">0</span>
+
+<div class="amount-box">
 Employee Payable Amount (AED): <span id="amount">0</span>
 </div>
 
 </div>
 
-<script>
-function calculate(){
-    let expiry = new Date(document.getElementById("expiry").value);
-    let today = new Date();
+</div>
 
-    let diffTime = expiry - today;
+<script>
+
+function calculate(){
+
+    let expiry = new Date(document.getElementById("expiry").value);
+    let newVisa = new Date(document.getElementById("newVisaDate").value);
+
+    let diffTime = expiry - newVisa;
     let days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    if(days < 0){ days = 0; }
+
+    if(days < 0){
+        days = 0;
+    }
 
     let cost = document.getElementById("process").value;
+
     let total = days * cost;
 
     document.getElementById("days").innerText = days;
     document.getElementById("amount").innerText = total;
+
 }
+
 </script>
 
 </body>
